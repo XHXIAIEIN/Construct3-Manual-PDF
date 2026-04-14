@@ -1,151 +1,93 @@
-# Construct 3 Addon SDK (PDF)
+# Addon SDK (PDF)
 
-This repository contains PDF documentation extracted from the official Construct 3 Addon SDK manual.
+This directory contains PDF documentation extracted from the official documentation.
 
 ## Source
 
-All PDFs are downloaded and split from the official Construct 3 Addon SDK documentation:
+All PDFs are generated from the official documentation:
 
-> Source: `construct3-Addon-SDK.pdf` (152 pages, 62 sections)
-> https://www.construct.net/en/make-games/manuals/addon-sdk
-
----
-
-## Root Files
-
-| File | Description |
-|------|-------------|
-| [home.pdf](home.pdf) | Addon SDK home page |
-| [runtime-reference.pdf](runtime-reference.pdf) | Runtime API reference |
+> Source: [Addon SDK](https://www.construct.net/en/make-games/manuals/addon-sdk)
 
 ---
 
-## Table of Contents
+## Files (62 PDFs)
 
-| Section | Files | Description |
-|---------|:-----:|-------------|
-| [Guide](#guide) | 21 | Development guide for creating addons |
-| [Editor API Reference](#editor-api-reference) | 39 | Editor-side API interfaces |
+### Root
 
----
+| File | Path |
+|------|------|
+| [home](home.pdf) | `home.pdf` |
+| [runtime-reference](runtime-reference.pdf) | `runtime-reference.pdf` |
 
-## Guide
+### Guide (21 files)
 
-> 21 files
+| File | Path |
+|------|------|
+| [addon-metadata](guide/addon-metadata.pdf) | `guide/addon-metadata.pdf` |
+| [c3addon-file](guide/c3addon-file.pdf) | `guide/c3addon-file.pdf` |
+| [configuring-behaviors](guide/configuring-behaviors.pdf) | `guide/configuring-behaviors.pdf` |
+| [webgl-shaders](guide/configuring-effects/webgl-shaders.pdf) | `guide/configuring-effects/webgl-shaders.pdf` |
+| [webgpu-shaders](guide/configuring-effects/webgpu-shaders.pdf) | `guide/configuring-effects/webgpu-shaders.pdf` |
+| [configuring-effects](guide/configuring-effects.pdf) | `guide/configuring-effects.pdf` |
+| [configuring-plugins](guide/configuring-plugins.pdf) | `guide/configuring-plugins.pdf` |
+| [defining-aces](guide/defining-aces.pdf) | `guide/defining-aces.pdf` |
+| [editor-scripts](guide/editor-scripts.pdf) | `guide/editor-scripts.pdf` |
+| [enabling-developer-mode](guide/enabling-developer-mode.pdf) | `guide/enabling-developer-mode.pdf` |
+| [language-file](guide/language-file.pdf) | `guide/language-file.pdf` |
+| [porting-addon-sdk-v2](guide/porting-addon-sdk-v2.pdf) | `guide/porting-addon-sdk-v2.pdf` |
+| [porting-c2-addons](guide/porting-c2-addons.pdf) | `guide/porting-c2-addons.pdf` |
+| [runtime-scripts](guide/runtime-scripts.pdf) | `guide/runtime-scripts.pdf` |
+| [safe-mode](guide/safe-mode.pdf) | `guide/safe-mode.pdf` |
+| [script-minification](guide/script-minification.pdf) | `guide/script-minification.pdf` |
+| [themes](guide/themes.pdf) | `guide/themes.pdf` |
+| [timeline-integration](guide/timeline-integration.pdf) | `guide/timeline-integration.pdf` |
+| [typescript-support](guide/typescript-support.pdf) | `guide/typescript-support.pdf` |
+| [using-developer-mode](guide/using-developer-mode.pdf) | `guide/using-developer-mode.pdf` |
+| [wrapper-extensions](guide/wrapper-extensions.pdf) | `guide/wrapper-extensions.pdf` |
 
-| File | Description |
-|------|-------------|
-| [c3addon-file.pdf](guide/c3addon-file.pdf) | The .c3addon file format |
-| [addon-metadata.pdf](guide/addon-metadata.pdf) | Addon metadata configuration |
-| [typescript-support.pdf](guide/typescript-support.pdf) | TypeScript support |
-| [configuring-plugins.pdf](guide/configuring-plugins.pdf) | Configuring plugins |
-| [configuring-behaviors.pdf](guide/configuring-behaviors.pdf) | Configuring behaviors |
-| [configuring-effects.pdf](guide/configuring-effects.pdf) | Configuring effects |
-| [defining-aces.pdf](guide/defining-aces.pdf) | Defining actions, conditions and expressions |
-| [language-file.pdf](guide/language-file.pdf) | The language file |
-| [editor-scripts.pdf](guide/editor-scripts.pdf) | Editor scripts |
-| [runtime-scripts.pdf](guide/runtime-scripts.pdf) | Runtime scripts |
-| [timeline-integration.pdf](guide/timeline-integration.pdf) | Timeline integration |
-| [script-minification.pdf](guide/script-minification.pdf) | Script minification |
-| [wrapper-extensions.pdf](guide/wrapper-extensions.pdf) | Wrapper extensions |
-| [porting-c2-addons.pdf](guide/porting-c2-addons.pdf) | Porting Construct 2 plugins/behaviors |
-| [porting-addon-sdk-v2.pdf](guide/porting-addon-sdk-v2.pdf) | Porting to Addon SDK v2 |
-| [themes.pdf](guide/themes.pdf) | Theme addons |
-| [enabling-developer-mode.pdf](guide/enabling-developer-mode.pdf) | Enabling Developer Mode |
-| [using-developer-mode.pdf](guide/using-developer-mode.pdf) | Using Developer Mode |
-| [safe-mode.pdf](guide/safe-mode.pdf) | Safe mode |
+### Reference (39 files)
 
-### Configuring Effects
-
-| File | Description |
-|------|-------------|
-| [webgl-shaders.pdf](guide/configuring-effects/webgl-shaders.pdf) | WebGL shaders |
-| [webgpu-shaders.pdf](guide/configuring-effects/webgpu-shaders.pdf) | WebGPU shaders |
-
----
-
-## Editor API Reference
-
-> 39 files
-
-### Base Classes
-
-| File | Description |
-|------|-------------|
-| [ibehaviorinstancebase.pdf](reference/base-classes/ibehaviorinstancebase.pdf) | IBehaviorInstanceBase interface |
-| [iinstancebase.pdf](reference/base-classes/iinstancebase.pdf) | IInstanceBase interface |
-| [iworldinstancebase.pdf](reference/base-classes/iworldinstancebase.pdf) | IWorldInstanceBase interface |
-
-### Geometry Interfaces
-
-| File | Description |
-|------|-------------|
-| [color.pdf](reference/geometry-interfaces/color.pdf) | Color interface |
-| [quad.pdf](reference/geometry-interfaces/quad.pdf) | Quad interface |
-| [rect.pdf](reference/geometry-interfaces/rect.pdf) | Rect interface |
-
-### Graphics Interfaces
-
-| File | Description |
-|------|-------------|
-| [idrawparams.pdf](reference/graphics-interfaces/idrawparams.pdf) | IDrawParams interface |
-| [iwebglrenderer.pdf](reference/graphics-interfaces/iwebglrenderer.pdf) | IWebGLRenderer interface |
-| [iwebgltext.pdf](reference/graphics-interfaces/iwebgltext.pdf) | IWebGLText interface |
-| [iwebgltexture.pdf](reference/graphics-interfaces/iwebgltexture.pdf) | IWebGLTexture interface |
-
-### Misc. Interfaces
-
-| File | Description |
-|------|-------------|
-| [ilang.pdf](reference/misc-interfaces/ilang.pdf) | ILang interface |
-| [izipfile.pdf](reference/misc-interfaces/izipfile.pdf) | IZipFile interface |
-| [izipfileentry.pdf](reference/misc-interfaces/izipfileentry.pdf) | IZipFileEntry interface |
-
-### Model Interfaces
-
-| File | Description |
-|------|-------------|
-| [ieventblock.pdf](reference/model-interfaces/ieventblock.pdf) | IEventBlock interface |
-| [ieventparentrow.pdf](reference/model-interfaces/ieventparentrow.pdf) | IEventParentRow interface |
-| [ieventsheet.pdf](reference/model-interfaces/ieventsheet.pdf) | IEventSheet interface |
-| [ilayer.pdf](reference/model-interfaces/ilayer.pdf) | ILayer interface |
-| [ilayout.pdf](reference/model-interfaces/ilayout.pdf) | ILayout interface |
-| [iproject.pdf](reference/model-interfaces/iproject.pdf) | IProject interface |
-| [iprojectfile.pdf](reference/model-interfaces/iprojectfile.pdf) | IProjectFile interface |
-
-### Object Interfaces
-
-| File | Description |
-|------|-------------|
-| [ianimation.pdf](reference/object-interfaces/ianimation.pdf) | IAnimation interface |
-| [ianimationframe.pdf](reference/object-interfaces/ianimationframe.pdf) | IAnimationFrame interface |
-| [ibehaviorinstance.pdf](reference/object-interfaces/ibehaviorinstance.pdf) | IBehaviorInstance interface |
-| [ibehaviortype.pdf](reference/object-interfaces/ibehaviortype.pdf) | IBehaviorType interface |
-| [icollisionpoly.pdf](reference/object-interfaces/icollisionpoly.pdf) | ICollisionPoly interface |
-| [icontainer.pdf](reference/object-interfaces/icontainer.pdf) | IContainer interface |
-| [ifamily.pdf](reference/object-interfaces/ifamily.pdf) | IFamily interface |
-| [iimagepoint.pdf](reference/object-interfaces/iimagepoint.pdf) | IImagePoint interface |
-| [iobjectclass.pdf](reference/object-interfaces/iobjectclass.pdf) | IObjectClass interface |
-| [iobjectinstance.pdf](reference/object-interfaces/iobjectinstance.pdf) | IObjectInstance interface |
-| [iobjecttype.pdf](reference/object-interfaces/iobjecttype.pdf) | IObjectType interface |
-| [iworldinstance.pdf](reference/object-interfaces/iworldinstance.pdf) | IWorldInstance interface |
-
-### UI Interfaces
-
-| File | Description |
-|------|-------------|
-| [ilayoutview.pdf](reference/ui-interfaces/ilayoutview.pdf) | ILayoutView interface |
-| [utilities.pdf](reference/ui-interfaces/utilities.pdf) | Utilities interface |
-
-### Other Reference
-
-| File | Description |
-|------|-------------|
-| [finding-addon-ids.pdf](reference/finding-addon-ids.pdf) | Finding addon IDs |
-| [ibehaviorinfo.pdf](reference/ibehaviorinfo.pdf) | IBehaviorInfo interface |
-| [iplugininfo.pdf](reference/iplugininfo.pdf) | IPluginInfo interface |
-| [pluginproperty.pdf](reference/pluginproperty.pdf) | PluginProperty class |
-| [specifying-dependencies.pdf](reference/specifying-dependencies.pdf) | Specifying dependencies |
+| File | Path |
+|------|------|
+| [ibehaviorinstancebase](reference/base-classes/ibehaviorinstancebase.pdf) | `reference/base-classes/ibehaviorinstancebase.pdf` |
+| [iinstancebase](reference/base-classes/iinstancebase.pdf) | `reference/base-classes/iinstancebase.pdf` |
+| [iworldinstancebase](reference/base-classes/iworldinstancebase.pdf) | `reference/base-classes/iworldinstancebase.pdf` |
+| [finding-addon-ids](reference/finding-addon-ids.pdf) | `reference/finding-addon-ids.pdf` |
+| [color](reference/geometry-interfaces/color.pdf) | `reference/geometry-interfaces/color.pdf` |
+| [quad](reference/geometry-interfaces/quad.pdf) | `reference/geometry-interfaces/quad.pdf` |
+| [rect](reference/geometry-interfaces/rect.pdf) | `reference/geometry-interfaces/rect.pdf` |
+| [idrawparams](reference/graphics-interfaces/idrawparams.pdf) | `reference/graphics-interfaces/idrawparams.pdf` |
+| [iwebglrenderer](reference/graphics-interfaces/iwebglrenderer.pdf) | `reference/graphics-interfaces/iwebglrenderer.pdf` |
+| [iwebgltext](reference/graphics-interfaces/iwebgltext.pdf) | `reference/graphics-interfaces/iwebgltext.pdf` |
+| [iwebgltexture](reference/graphics-interfaces/iwebgltexture.pdf) | `reference/graphics-interfaces/iwebgltexture.pdf` |
+| [ibehaviorinfo](reference/ibehaviorinfo.pdf) | `reference/ibehaviorinfo.pdf` |
+| [iplugininfo](reference/iplugininfo.pdf) | `reference/iplugininfo.pdf` |
+| [ilang](reference/misc-interfaces/ilang.pdf) | `reference/misc-interfaces/ilang.pdf` |
+| [izipfile](reference/misc-interfaces/izipfile.pdf) | `reference/misc-interfaces/izipfile.pdf` |
+| [izipfileentry](reference/misc-interfaces/izipfileentry.pdf) | `reference/misc-interfaces/izipfileentry.pdf` |
+| [ieventblock](reference/model-interfaces/ieventblock.pdf) | `reference/model-interfaces/ieventblock.pdf` |
+| [ieventparentrow](reference/model-interfaces/ieventparentrow.pdf) | `reference/model-interfaces/ieventparentrow.pdf` |
+| [ieventsheet](reference/model-interfaces/ieventsheet.pdf) | `reference/model-interfaces/ieventsheet.pdf` |
+| [ilayer](reference/model-interfaces/ilayer.pdf) | `reference/model-interfaces/ilayer.pdf` |
+| [ilayout](reference/model-interfaces/ilayout.pdf) | `reference/model-interfaces/ilayout.pdf` |
+| [iproject](reference/model-interfaces/iproject.pdf) | `reference/model-interfaces/iproject.pdf` |
+| [iprojectfile](reference/model-interfaces/iprojectfile.pdf) | `reference/model-interfaces/iprojectfile.pdf` |
+| [ianimation](reference/object-interfaces/ianimation.pdf) | `reference/object-interfaces/ianimation.pdf` |
+| [ianimationframe](reference/object-interfaces/ianimationframe.pdf) | `reference/object-interfaces/ianimationframe.pdf` |
+| [ibehaviorinstance](reference/object-interfaces/ibehaviorinstance.pdf) | `reference/object-interfaces/ibehaviorinstance.pdf` |
+| [ibehaviortype](reference/object-interfaces/ibehaviortype.pdf) | `reference/object-interfaces/ibehaviortype.pdf` |
+| [icollisionpoly](reference/object-interfaces/icollisionpoly.pdf) | `reference/object-interfaces/icollisionpoly.pdf` |
+| [icontainer](reference/object-interfaces/icontainer.pdf) | `reference/object-interfaces/icontainer.pdf` |
+| [ifamily](reference/object-interfaces/ifamily.pdf) | `reference/object-interfaces/ifamily.pdf` |
+| [iimagepoint](reference/object-interfaces/iimagepoint.pdf) | `reference/object-interfaces/iimagepoint.pdf` |
+| [iobjectclass](reference/object-interfaces/iobjectclass.pdf) | `reference/object-interfaces/iobjectclass.pdf` |
+| [iobjectinstance](reference/object-interfaces/iobjectinstance.pdf) | `reference/object-interfaces/iobjectinstance.pdf` |
+| [iobjecttype](reference/object-interfaces/iobjecttype.pdf) | `reference/object-interfaces/iobjecttype.pdf` |
+| [iworldinstance](reference/object-interfaces/iworldinstance.pdf) | `reference/object-interfaces/iworldinstance.pdf` |
+| [pluginproperty](reference/pluginproperty.pdf) | `reference/pluginproperty.pdf` |
+| [specifying-dependencies](reference/specifying-dependencies.pdf) | `reference/specifying-dependencies.pdf` |
+| [ilayoutview](reference/ui-interfaces/ilayoutview.pdf) | `reference/ui-interfaces/ilayoutview.pdf` |
+| [utilities](reference/ui-interfaces/utilities.pdf) | `reference/ui-interfaces/utilities.pdf` |
 
 ---
 
