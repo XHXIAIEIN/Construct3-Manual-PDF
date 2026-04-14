@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "last_updated": null,
+  "construct_version": "1757",
+  "cdn_urls": {
+    "manual": "https://construct-static.com/downloads/v1757/manuals/1/2/668/construct-3.pdf",
+    "addon-sdk": "https://construct-static.com/downloads/v1757/manuals/2/2/73/construct-3.pdf",
+    "game-services": "https://construct-static.com/downloads/v1757/manuals/7/6/31/game-services.pdf"
+  },
+  "cdn_last_modified": {},
+  "targets": {}
+}
