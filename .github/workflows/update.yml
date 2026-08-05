@@ -24,7 +24,7 @@ on:
 jobs:
   check-and-update:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 30
     permissions:
       contents: write
       pull-requests: write
@@ -81,14 +81,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh workflow run update-pdfs.yml -f version='${{ steps.ver.outputs.latest }}'
+          gh workflow run update.yml -f version='${{ steps.ver.outputs.latest }}'
           echo "::notice::Dispatched update run with version ${{ steps.ver.outputs.latest }}"
 
       - name: Install dependencies (${{ steps.ver.outputs.latest }})
         if: steps.ver.outputs.mode == 'update'
-        run: |
-          pip install -r scripts/requirements.txt
-          playwright install chromium --with-deps
+        run: pip install -r scripts/requirements.txt
 
       - name: Check for updates (${{ steps.ver.outputs.latest }})
         if: steps.ver.outputs.mode == 'update'
@@ -111,9 +109,9 @@ jobs:
           fi
           python scripts/update_pdfs.py download --target ${{ inputs.target || 'all' }} $FORCE_FLAG
 
-      - name: Generate individual PDFs (${{ steps.ver.outputs.latest }})
+      - name: Split into individual PDFs (${{ steps.ver.outputs.latest }})
         if: steps.ver.outputs.mode == 'update' && (steps.check.outputs.changed == 'true' || inputs.force)
-        run: python scripts/update_pdfs.py generate --target ${{ inputs.target || 'all' }} --delay 1000
+        run: python scripts/update_pdfs.py generate --target ${{ inputs.target || 'all' }}
 
       - name: Update READMEs (${{ steps.ver.outputs.latest }})
         if: steps.ver.outputs.mode == 'update' && (steps.check.outputs.changed == 'true' || inputs.force)

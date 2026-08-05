@@ -16,7 +16,7 @@ All PDFs are generated from the official documentation:
 
 | File | Path |
 |------|------|
-| [home](home.pdf) | `home.pdf` |
+| [index](index.pdf) | `index.pdf` |
 | [runtime-reference](runtime-reference.pdf) | `runtime-reference.pdf` |
 
 ### Guide (21 files)

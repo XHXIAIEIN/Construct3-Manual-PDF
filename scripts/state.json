@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-04-14T08:28:27.317040+00:00",
+  "last_updated": "2026-08-04T05:19:32.828711+00:00",
   "construct_version": "1757",
   "cdn_urls": {
     "manual": "https://construct-static.com/downloads/v1757/manuals/1/2/668/construct-3.pdf",
@@ -15,11 +15,15 @@
   "targets": {
     "addon-sdk": {
       "total_pages": 62,
-      "last_generated": "2026-04-14T07:43:57.930730+00:00"
+      "last_generated": "2026-08-04T05:19:27.439712+00:00"
     },
     "manual": {
       "total_pages": 345,
-      "last_generated": "2026-04-14T08:28:27.220179+00:00"
+      "last_generated": "2026-08-04T05:19:24.575583+00:00"
+    },
+    "game-services": {
+      "total_pages": 135,
+      "last_generated": "2026-08-04T05:19:32.828690+00:00"
     }
   }
 }

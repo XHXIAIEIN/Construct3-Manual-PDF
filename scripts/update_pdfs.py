@@ -2,27 +2,32 @@
 """
 Construct 3 Documentation PDF Updater
 
-Downloads combined PDFs from construct-static.com CDN,
-generates individual page PDFs via headless Chrome (Playwright),
-and maintains the directory structure + READMEs.
+Downloads combined PDFs from construct-static.com CDN, splits them into
+individual page PDFs, and maintains the directory structure + READMEs.
+
+The split adds what the CDN's PDFs lack: a bookmark outline on the combined
+files, per-chapter outlines on the split ones, cross-references rewritten to
+jump between local files instead of back to the website, and page footers
+renumbered to match the file they now live in.
 
 Commands:
     check       Check CDN for updates (HEAD only, no downloads)
     download    Download combined PDFs from CDN
-    generate    Generate individual page PDFs via headless Chrome
-    update      Full update: download + generate
+    generate    Split combined PDFs into individual page PDFs
+    update      Full update: download + generate + readme
     discover    Re-discover CDN download URLs from construct.net
+    readme      Regenerate README.md for each target directory
 
 Options:
-    --target T   Target: manual, addon-sdk, game-services, all (default: all)
-    --force      Force re-download/regenerate even if unchanged
-    --delay N    Delay between pages in ms (default: 800)
-    --batch N    Max pages per target (0 = unlimited, default: 0)
+    --target T     Target: manual, addon-sdk, game-services, all (default: all)
+    --force        Force re-download even if CDN is unchanged
+    --incremental  Keep existing individual PDFs, only write missing ones
+    --batch N      Max pages per target (0 = unlimited, default: 0)
 
 Examples:
     python update_pdfs.py check
     python update_pdfs.py download --force
-    python update_pdfs.py generate --target manual --batch 10
+    python update_pdfs.py generate --target manual
     python update_pdfs.py update
 """
 
@@ -30,11 +35,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
-import time
+import os
+import re
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
+import fitz
 import requests
 
 # ─── Paths ───────────────────────────────────────────────────────────
@@ -80,24 +87,13 @@ DEFAULT_CDN_URLS = {
     "game-services": "https://construct-static.com/downloads/v1757/manuals/7/6/31/game-services.pdf",
 }
 
-# Print CSS injected to hide nav/sidebar/footer for clean PDFs
-PRINT_CSS = """
-    nav, header, footer, .sidebar, .sidebarWrap, .headerWrap,
-    .footerWrap, .breadcrumbs, .onThisPageWrap, .downloadManual,
-    .manualSearchWrap, .manualNavWrap, .topHeaderWrap,
-    .bottomFooterWrap, .shareWrap, #cookieConsent,
-    .feedbackWrap, .pageNav, .relatedContent {
-        display: none !important;
-    }
-    .manualContent {
-        margin: 0 !important;
-        padding: 20px !important;
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-    body { background: white !important; }
-    @page { margin: 0; }
-"""
+# Type scale of the combined PDFs: 31.2pt chapter heading, 18pt section
+# heading, 12pt body and footer. Chapter starts also carry a "View online:"
+# line naming the manual page they came from.
+CHAPTER_SIZE = 24
+SECTION_SIZE = 14
+FOOTER_SIZE = 12
+VIEW_ONLINE_RE = re.compile(r"View online:\s*(\S+)")
 
 # ─── State Management ────────────────────────────────────────────────
 
@@ -292,97 +288,149 @@ def cmd_discover(state: dict, target_keys: list[str]) -> None:
 # ─── Generate Command ────────────────────────────────────────────────
 
 
-def _discover_page_urls(page, target: dict) -> list[str]:
-    """Extract all manual page URLs from sidebar navigation."""
-    url = BASE_URL + target["base_path"]
-    page.goto(url, wait_until="domcontentloaded", timeout=60000)
+def _headings(page, min_size: float, max_size: float | None = None) -> list[str]:
+    """Collect a page's headings, grouped by text block.
 
-    try:
-        page.wait_for_selector(".manualContent", timeout=30000)
-    except Exception:
-        # Retry once — Cloudflare sometimes needs a moment
-        page.reload(wait_until="domcontentloaded")
-        page.wait_for_selector(".manualContent", timeout=30000)
+    A heading may wrap across lines within its block, so spans are joined per
+    block rather than per line.
+    """
+    found = []
 
-    base_path = target["base_path"]
-    urls: list[str] = page.evaluate(
-        """(basePath) => {
-            const links = document.querySelectorAll('nav a');
-            const urlSet = new Set();
-            links.forEach(a => {
-                const href = a.href.split('#')[0].split('?')[0];
-                if (href.includes(basePath)) urlSet.add(href);
-            });
-            return [...urlSet].sort();
-        }""",
-        base_path,
-    )
+    for block in page.get_text("dict")["blocks"]:
+        spans = [s for line in block.get("lines", []) for s in line["spans"]]
+        if not spans:
+            continue
+        size = spans[0]["size"]
+        if size < min_size or (max_size is not None and size >= max_size):
+            continue
+        text = " ".join("".join(s["text"] for s in spans).split())
+        if text:
+            found.append(text)
 
-    # Ensure index page is included
-    index_url = BASE_URL + base_path
-    if index_url not in urls:
-        urls.insert(0, index_url)
-
-    return urls
+    return found
 
 
-def _url_to_filepath(url: str, target: dict) -> Path:
-    """Convert a manual page URL to local PDF file path."""
-    base = BASE_URL + target["base_path"]
-    rel_path = url.replace(base + "/", "").replace(base, "")
-    if rel_path.startswith("/"):
-        rel_path = rel_path[1:]
-    if not rel_path:
-        rel_path = "home"
+def _url_to_relpath(url: str, base_path: str) -> Path | None:
+    """Map a manual page URL onto its output path, mirroring the URL hierarchy.
 
-    parts = rel_path.split("/")
-    filename = parts[-1] + ".pdf"
-    directory = "/".join(parts[:-1]) if len(parts) > 1 else ""
+    Returns None for URLs pointing outside this target. Links inside the PDFs
+    appear in both /en/... and bare /... forms, so each is tried.
+    """
+    path = urlsplit(url).path.rstrip("/")
 
-    output_dir = REPO_ROOT / target["output_dir"]
-    if directory:
-        return output_dir / directory / filename
-    return output_dir / filename
+    for prefix in (base_path, base_path.replace("/en", "", 1)):
+        if path == prefix:
+            return Path("index.pdf")
+        if path.startswith(f"{prefix}/"):
+            return Path(f"{path[len(prefix) + 1:]}.pdf")
+
+    return None
 
 
-def _generate_page_pdf(page, url: str, output_path: Path) -> bool:
-    """Navigate to a page, inject print CSS, save as PDF."""
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+def _extract_sections(doc, base_path: str) -> list[dict]:
+    """Locate every chapter start in a combined PDF.
 
-    try:
-        page.goto(url, wait_until="networkidle", timeout=60000)
-    except Exception:
-        # Fallback: wait for content selector instead of full network idle
-        page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        try:
-            page.wait_for_selector(".manualContent", timeout=15000)
-        except Exception:
-            return False
+    A chapter opens with an oversized heading followed by a "View online: <url>"
+    line naming the manual page it came from. The text layer wraps that URL
+    across lines, so the full URL is read back from the link annotation
+    covering it.
+    """
+    sections: list[dict] = []
 
-    # Inject CSS to produce clean print output
-    page.add_style_tag(content=PRINT_CSS)
+    for i, page in enumerate(doc):
+        match = VIEW_ONLINE_RE.search(page.get_text())
+        if not match:
+            continue
 
-    # Wait briefly for styles to apply
-    page.wait_for_timeout(300)
+        prefix = match.group(1)
+        uri = next(
+            (l["uri"] for l in page.get_links() if l.get("uri", "").startswith(prefix)),
+            None,
+        )
+        relpath = _url_to_relpath(uri, base_path) if uri else None
+        if relpath is None:
+            print(f"  page {i + 1}: unresolved URL {prefix} — skipped")
+            continue
 
-    page.pdf(
-        path=str(output_path),
-        format="A4",
-        margin={"top": "20mm", "right": "15mm", "bottom": "20mm", "left": "15mm"},
-        print_background=True,
-    )
-    return True
+        heading = _headings(page, CHAPTER_SIZE)
+        sections.append({
+            "start": i,
+            "path": relpath,
+            "title": heading[0] if heading else relpath.stem,
+        })
+
+    # A chapter runs until the next one begins
+    for n, sec in enumerate(sections):
+        sec["end"] = (
+            sections[n + 1]["start"] - 1 if n + 1 < len(sections) else doc.page_count - 1
+        )
+
+    return sections
+
+
+def _localise_links(out, source: Path, known: set[Path], base_path: str) -> int:
+    """Repoint links that target other manual pages at the local split files.
+
+    The combined PDF carries only web links, so a split file would otherwise
+    send every cross-reference back online. Rewriting them as cross-document
+    jumps keeps the whole set navigable offline.
+    """
+    rewritten = 0
+
+    for page in out:
+        for link in page.get_links():
+            if link["kind"] != fitz.LINK_URI:
+                continue
+            target = _url_to_relpath(link["uri"], base_path)
+            if target is None or target == source or target not in known:
+                continue
+
+            link.pop("uri")
+            link.update({
+                "kind": fitz.LINK_GOTOR,
+                "file": os.path.relpath(target, source.parent).replace(os.sep, "/"),
+                "page": 0,
+                "to": fitz.Point(0, 0),
+            })
+            page.update_link(link)
+            rewritten += 1
+
+    return rewritten
+
+
+def _restamp_footers(out) -> None:
+    """Rewrite the "Page N of <total>" footer to match the split file.
+
+    Page numbers are painted into the combined PDF's content stream, so left
+    alone a one-page chapter would still claim to be "Page 5 of 1183".
+    """
+    total = out.page_count
+
+    for n, page in enumerate(out, 1):
+        footer = fitz.Rect(0, page.rect.height - 40, page.rect.width, page.rect.height)
+        hits = page.search_for("Page ", clip=footer)
+        if not hits:
+            continue
+
+        box = fitz.Rect(hits[0].x0, hits[0].y0 - 2, page.rect.width, hits[0].y1 + 2)
+        page.add_redact_annot(box)
+        page.apply_redactions()
+        page.insert_text(
+            (box.x0, hits[0].y1 - 3),
+            f"Page {n} of {total}",
+            fontname="hebo",
+            fontsize=FOOTER_SIZE,
+        )
 
 
 def _clean_output_dir(target: dict) -> None:
-    """Remove all existing PDFs and empty subdirs in a target's output directory."""
+    """Remove all existing PDFs and subdirs in a target's output directory."""
     import shutil
 
     output_dir = REPO_ROOT / target["output_dir"]
     if not output_dir.exists():
         return
 
-    # Delete everything except README.md
     for item in list(output_dir.iterdir()):
         if item.name == "README.md":
             continue
@@ -398,86 +446,93 @@ def cmd_generate(
     state: dict,
     target_keys: list[str],
     incremental: bool = False,
-    delay: int = 800,
     batch: int = 0,
 ) -> None:
-    """Generate individual page PDFs using headless Chrome.
+    """Split each combined PDF into one PDF per manual page.
 
-    Default: full deploy — wipe output dir, regenerate everything.
-    With --incremental: keep existing files, only generate missing ones.
+    Default: full deploy — wipe output dir, re-split everything.
+    With --incremental: keep existing files, only write missing ones.
     """
-    from playwright.sync_api import sync_playwright
+    print("Splitting combined PDFs...")
 
-    print("Generating individual page PDFs...")
+    for key in target_keys:
+        target = TARGETS[key]
+        combined = REPO_ROOT / target["combined_pdf"]
+        output_dir = REPO_ROOT / target["output_dir"]
+        base_path = target["base_path"]
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        context = browser.new_context(
-            user_agent=USER_AGENT,
-            viewport={"width": 1280, "height": 800},
+        if not combined.exists():
+            print(f"\n[{target['name']}] {combined.name} not found — run 'download' first")
+            continue
+
+        doc = fitz.open(combined)
+        sections = _extract_sections(doc, base_path)
+        print(f"\n[{target['name']}] {doc.page_count} pages → {len(sections)} sections")
+
+        if not sections:
+            print("  No sections found — PDF layout may have changed")
+            doc.close()
+            continue
+
+        if not incremental:
+            _clean_output_dir(target)
+
+        known = {sec["path"] for sec in sections}
+        base_meta = doc.metadata or {}
+        combined_toc: list[list] = []
+        stats = {"written": 0, "skipped": 0, "links": 0}
+
+        for sec in sections[:batch] if batch else sections:
+            output_path = output_dir / sec["path"]
+
+            # Outline for the combined PDF: chapters, each with its own sections
+            combined_toc.append([1, sec["title"], sec["start"] + 1])
+            for n in range(sec["start"], sec["end"] + 1):
+                combined_toc += [
+                    [2, text, n + 1]
+                    for text in _headings(doc[n], SECTION_SIZE, CHAPTER_SIZE)
+                ]
+
+            if incremental and output_path.exists():
+                stats["skipped"] += 1
+                continue
+
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+
+            out = fitz.open()
+            out.insert_pdf(doc, from_page=sec["start"], to_page=sec["end"])
+            out.set_metadata({**base_meta, "title": sec["title"]})
+            out.set_toc([
+                [1, text, n + 1]
+                for n, page in enumerate(out)
+                for text in _headings(page, SECTION_SIZE, CHAPTER_SIZE)
+            ])
+            stats["links"] += _localise_links(out, sec["path"], known, base_path)
+            _restamp_footers(out)
+            # Each slice inherits the full font set of the combined PDF; subsetting
+            # to the glyphs actually used cuts roughly a third off the total size
+            out.subset_fonts()
+            out.save(str(output_path), garbage=4, deflate=True)
+            out.close()
+
+            stats["written"] += 1
+
+        # The CDN ships these with no outline at all, leaving 1000+ pages
+        # unnavigable. Skip the rewrite when unchanged — saveIncr appends.
+        if not batch and doc.get_toc() != combined_toc:
+            doc.set_toc(combined_toc)
+            doc.saveIncr()
+        doc.close()
+
+        state.setdefault("targets", {})[key] = {
+            "total_pages": len(sections),
+            "last_generated": datetime.now(timezone.utc).isoformat(),
+        }
+
+        print(
+            f"  Done: {stats['written']} written, {stats['skipped']} skipped, "
+            f"{stats['links']} links localised, {len(combined_toc)} bookmarks"
         )
-        page = context.new_page()
-
-        for key in target_keys:
-            target = TARGETS[key]
-            print(f"\n[{target['name']}] Discovering pages...")
-            urls = _discover_page_urls(page, target)
-            print(f"  Found {len(urls)} pages")
-
-            # Default: wipe old files for a clean deploy
-            if not incremental:
-                _clean_output_dir(target)
-
-            if batch:
-                urls = urls[:batch]
-
-            stats = {"success": 0, "skipped": 0, "failed": 0}
-
-            for i, url in enumerate(urls, 1):
-                output_path = _url_to_filepath(url, target)
-
-                if incremental and output_path.exists():
-                    stats["skipped"] += 1
-                    continue
-
-                slug = url.rstrip("/").split("/")[-1] or "home"
-                print(f"  [{i}/{len(urls)}] {slug}... ", end="", flush=True)
-
-                try:
-                    ok = _generate_page_pdf(page, url, output_path)
-                    if ok:
-                        pages_hint = ""
-                        try:
-                            import fitz
-                            doc = fitz.open(str(output_path))
-                            pages_hint = f" ({doc.page_count}p)"
-                            doc.close()
-                        except ImportError:
-                            pass
-                        print(f"ok{pages_hint}")
-                        stats["success"] += 1
-                    else:
-                        print("FAILED (content not found)")
-                        stats["failed"] += 1
-                except Exception as e:
-                    print(f"ERROR ({e})")
-                    stats["failed"] += 1
-
-                if delay:
-                    time.sleep(delay / 1000)
-
-            # Update state
-            state.setdefault("targets", {})[key] = {
-                "total_pages": len(urls),
-                "last_generated": datetime.now(timezone.utc).isoformat(),
-            }
-
-            print(
-                f"  Done: {stats['success']} generated, "
-                f"{stats['skipped']} skipped, {stats['failed']} failed"
-            )
-
-        browser.close()
 
     save_state(state)
 
@@ -609,12 +664,11 @@ def cmd_update(
     target_keys: list[str],
     force: bool = False,
     incremental: bool = False,
-    delay: int = 800,
     batch: int = 0,
 ) -> None:
-    """Full update: download combined + generate individual + update READMEs."""
+    """Full update: download combined + split individual + update READMEs."""
     cmd_download(state, target_keys, force=force)
-    cmd_generate(state, target_keys, incremental=incremental, delay=delay, batch=batch)
+    cmd_generate(state, target_keys, incremental=incremental, batch=batch)
     cmd_update_readmes(target_keys)
 
 
@@ -647,12 +701,6 @@ def parse_args() -> argparse.Namespace:
         help="Keep existing individual PDFs, only generate missing ones",
     )
     parser.add_argument(
-        "--delay",
-        type=int,
-        default=800,
-        help="Delay between pages in ms (default: 800)",
-    )
-    parser.add_argument(
         "--batch",
         type=int,
         default=0,
@@ -679,13 +727,15 @@ def main() -> None:
         cmd_download(state, target_keys, force=args.force)
 
     elif args.command == "generate":
-        cmd_generate(
-            state, target_keys, incremental=args.incremental, delay=args.delay, batch=args.batch
-        )
+        cmd_generate(state, target_keys, incremental=args.incremental, batch=args.batch)
 
     elif args.command == "update":
         cmd_update(
-            state, target_keys, force=args.force, incremental=args.incremental, delay=args.delay, batch=args.batch
+            state,
+            target_keys,
+            force=args.force,
+            incremental=args.incremental,
+            batch=args.batch,
         )
 
     elif args.command == "discover":

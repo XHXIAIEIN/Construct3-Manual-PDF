@@ -17,7 +17,7 @@ All PDFs are generated from the official documentation:
 | File | Path |
 |------|------|
 | [behavior-reference](behavior-reference.pdf) | `behavior-reference.pdf` |
-| [home](home.pdf) | `home.pdf` |
+| [index](index.pdf) | `index.pdf` |
 | [plugin-reference](plugin-reference.pdf) | `plugin-reference.pdf` |
 | [system-reference](system-reference.pdf) | `system-reference.pdf` |
 
