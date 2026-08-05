@@ -194,6 +194,24 @@ All PDFs are generated from the official documentation:
 
 ---
 
+## Release
+
+**Latest enhancement (direct PDF splitting):**
+
+- **Outline bookmarks** — 939 two-level bookmarks (chapters + sections) added to combined PDF
+- **Local cross-references** — 1,097 hyperlinks rewritten from website URLs to offline file jumps (LINK_GOTOR)
+- **Correct page numbers** — Footers renumbered to match individual file page counts
+- **Font optimization** — Subset fonts reduce file sizes ~28%
+- **Files** — 135 chapters split into 141 individual PDFs (index + root chapters + service hierarchy)
+- **Generation time** — ~17 seconds for full Game Services split
+
+All three target directories (Manual, Addon SDK, Game Services) include:
+- Combined PDF with full 2-level outline for navigation
+- Individual split PDFs with chapter-level bookmarks and local links
+- Regenerated README with complete file tree
+
+---
+
 ## License
 
 All content belongs to Scirra Ltd. This repository is for personal learning and reference purposes only.
