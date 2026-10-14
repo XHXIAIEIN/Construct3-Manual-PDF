@@ -1,6 +1,6 @@
 # Construct 3 Documentation (PDF)
 
-[![Release](https://img.shields.io/badge/release-r487-green)](https://www.construct.net/en/make-games/releases)
+[![Release](https://img.shields.io/badge/release-r506-green)](https://www.construct.net/en/make-games/releases)
 [![License](https://img.shields.io/badge/license-CC%20BY--SA%203.0-DE6400)](https://creativecommons.org/licenses/by-sa/3.0/)
 
 Unofficial PDF version of the official Construct 3 documentation. Split into individual PDF files by chapter for easy navigation and offline reading.
@@ -11,7 +11,7 @@ Unofficial PDF version of the official Construct 3 documentation. Split into ind
 
 ## Release
 
-r487
+r506
 
 ## Source
 

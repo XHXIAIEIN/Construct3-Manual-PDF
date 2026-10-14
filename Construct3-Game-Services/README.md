@@ -2,6 +2,10 @@
 
 This directory contains PDF documentation extracted from the official documentation.
 
+## Release
+
+r506
+
 ## Source
 
 All PDFs are generated from the official documentation:

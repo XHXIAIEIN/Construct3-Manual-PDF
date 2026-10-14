@@ -2,6 +2,7 @@
   "schema_version": 1,
   "last_updated": "2026-10-14T10:57:32.097695+00:00",
   "construct_version": "1757",
+  "release": "r506",
   "cdn_urls": {
     "manual": "https://construct-static.com/downloads/v1757/manuals/1/2/668/construct-3.pdf",
     "addon-sdk": "https://construct-static.com/downloads/v1757/manuals/2/2/73/construct-3.pdf",

@@ -130,6 +130,18 @@ def make_session() -> requests.Session:
     return s
 
 
+def fetch_stable_release(session: requests.Session) -> str | None:
+    """Return the current Stable release name (e.g. "r506") from versions.json."""
+    try:
+        resp = session.get("https://editor.construct.net/versions.json", timeout=30)
+        resp.raise_for_status()
+        stable = next((v for v in resp.json() if v.get("branchName") == "Stable"), None)
+    except (requests.RequestException, ValueError) as e:
+        print(f"  release: versions.json failed ({e})")
+        return None
+    return stable.get("releaseName") if stable else None
+
+
 # ─── Check Command ───────────────────────────────────────────────────
 
 
@@ -194,6 +206,8 @@ def cmd_download(state: dict, target_keys: list[str], force: bool = False) -> No
         target_keys = [k for k in target_keys if k in changes]
 
     session = make_session()
+    # The CDN serves the PDFs of the current Stable release
+    release = fetch_stable_release(session)
     print("\nDownloading combined PDFs...")
 
     for key in target_keys:
@@ -222,6 +236,8 @@ def cmd_download(state: dict, target_keys: list[str], force: bool = False) -> No
 
         # Update state
         state.setdefault("cdn_last_modified", {})[key] = last_modified
+        if release:
+            state["release"] = release
 
     save_state(state)
     print("Done.")
@@ -560,7 +576,7 @@ def _collect_pdf_tree(root_dir: Path) -> dict:
     return tree
 
 
-def _generate_target_readme(target_key: str) -> str:
+def _generate_target_readme(target_key: str, release: str | None) -> str:
     """Generate README.md content for a target directory."""
     target = TARGETS[target_key]
     output_dir = REPO_ROOT / target["output_dir"]
@@ -574,6 +590,10 @@ def _generate_target_readme(target_key: str) -> str:
         "",
         "This directory contains PDF documentation extracted from the official documentation.",
         "",
+    ]
+    if release:
+        lines.extend(["## Release", "", release, ""])
+    lines += [
         "## Source",
         "",
         "All PDFs are generated from the official documentation:",
@@ -637,9 +657,24 @@ def _generate_target_readme(target_key: str) -> str:
     return "\n".join(lines)
 
 
-def cmd_update_readmes(target_keys: list[str]) -> None:
+def _update_root_readme(release: str) -> None:
+    """Set the release badge and the Release section of the root README."""
+    path = REPO_ROOT / "README.md"
+    text = path.read_text(encoding="utf-8")
+    text = re.sub(r"release-r[\w.]+-green", f"release-{release}-green", text)
+    text = re.sub(r"(## Release\n\n)r[\w.]+", rf"\g<1>{release}", text)
+    path.write_text(text, encoding="utf-8")
+    print(f"  root: README.md ({release})")
+
+
+def cmd_update_readmes(state: dict, target_keys: list[str]) -> None:
     """Regenerate README.md files for each target directory."""
     print("\nUpdating READMEs...")
+    release = state.get("release")
+    if release:
+        _update_root_readme(release)
+    else:
+        print("  release: unknown, Release sections left out")
     for key in target_keys:
         target = TARGETS[key]
         output_dir = REPO_ROOT / target["output_dir"]
@@ -648,7 +683,7 @@ def cmd_update_readmes(target_keys: list[str]) -> None:
             continue
 
         readme_path = output_dir / "README.md"
-        content = _generate_target_readme(key)
+        content = _generate_target_readme(key, release)
         readme_path.write_text(content, encoding="utf-8")
         total = sum(1 for _ in output_dir.rglob("*.pdf"))
         print(f"  {key}: {readme_path.relative_to(REPO_ROOT)} ({total} PDFs)")
@@ -669,7 +704,7 @@ def cmd_update(
     """Full update: download combined + split individual + update READMEs."""
     cmd_download(state, target_keys, force=force)
     cmd_generate(state, target_keys, incremental=incremental, batch=batch)
-    cmd_update_readmes(target_keys)
+    cmd_update_readmes(state, target_keys)
 
 
 # ─── CLI ─────────────────────────────────────────────────────────────
@@ -742,7 +777,7 @@ def main() -> None:
         cmd_discover(state, target_keys)
 
     elif args.command == "readme":
-        cmd_update_readmes(target_keys)
+        cmd_update_readmes(state, target_keys)
 
 
 if __name__ == "__main__":
