@@ -10,7 +10,7 @@ All PDFs are generated from the official documentation:
 
 ---
 
-## Files (345 PDFs)
+## Files (350 PDFs)
 
 ### Root
 
@@ -21,12 +21,13 @@ All PDFs are generated from the official documentation:
 | [plugin-reference](plugin-reference.pdf) | `plugin-reference.pdf` |
 | [system-reference](system-reference.pdf) | `system-reference.pdf` |
 
-### Behavior Reference (31 files)
+### Behavior Reference (32 files)
 
 | File | Path |
 |------|------|
 | [8-direction](behavior-reference/8-direction.pdf) | `behavior-reference/8-direction.pdf` |
 | [anchor](behavior-reference/anchor.pdf) | `behavior-reference/anchor.pdf` |
+| [billboard](behavior-reference/billboard.pdf) | `behavior-reference/billboard.pdf` |
 | [bound-to](behavior-reference/bound-to.pdf) | `behavior-reference/bound-to.pdf` |
 | [bullet](behavior-reference/bullet.pdf) | `behavior-reference/bullet.pdf` |
 | [car](behavior-reference/car.pdf) | `behavior-reference/car.pdf` |
@@ -66,7 +67,7 @@ All PDFs are generated from the official documentation:
 | [system-requirements](getting-started/system-requirements.pdf) | `getting-started/system-requirements.pdf` |
 | [using-an-account](getting-started/using-an-account.pdf) | `getting-started/using-an-account.pdf` |
 
-### Interface (51 files)
+### Interface (53 files)
 
 | File | Path |
 |------|------|
@@ -118,6 +119,8 @@ All PDFs are generated from the official documentation:
 | [file-editors](interface/file-editors.pdf) | `interface/file-editors.pdf` |
 | [flowchart-view](interface/flowchart-view.pdf) | `interface/flowchart-view.pdf` |
 | [keyboard-shortcuts](interface/keyboard-shortcuts.pdf) | `interface/keyboard-shortcuts.pdf` |
+| [2d-view](interface/layout-view/2d-view.pdf) | `interface/layout-view/2d-view.pdf` |
+| [3d-view](interface/layout-view/3d-view.pdf) | `interface/layout-view/3d-view.pdf` |
 | [layout-view](interface/layout-view.pdf) | `interface/layout-view.pdf` |
 | [main-menu](interface/main-menu.pdf) | `interface/main-menu.pdf` |
 | [main-toolbar](interface/main-toolbar.pdf) | `interface/main-toolbar.pdf` |
@@ -262,7 +265,7 @@ All PDFs are generated from the official documentation:
 | [track](project-primitives/timelines/track.pdf) | `project-primitives/timelines/track.pdf` |
 | [timelines](project-primitives/timelines.pdf) | `project-primitives/timelines.pdf` |
 
-### Scripting (113 files)
+### Scripting (115 files)
 
 | File | Path |
 |------|------|
@@ -284,6 +287,7 @@ All PDFs are generated from the official documentation:
 | [isdkworldinstancebase](scripting/scripting-reference/addon-sdk-interfaces/isdkworldinstancebase.pdf) | `scripting/scripting-reference/addon-sdk-interfaces/isdkworldinstancebase.pdf` |
 | [addon-sdk-interfaces](scripting/scripting-reference/addon-sdk-interfaces.pdf) | `scripting/scripting-reference/addon-sdk-interfaces.pdf` |
 | [anchor](scripting/scripting-reference/behavior-interfaces/anchor.pdf) | `scripting/scripting-reference/behavior-interfaces/anchor.pdf` |
+| [billboard](scripting/scripting-reference/behavior-interfaces/billboard.pdf) | `scripting/scripting-reference/behavior-interfaces/billboard.pdf` |
 | [bullet](scripting/scripting-reference/behavior-interfaces/bullet.pdf) | `scripting/scripting-reference/behavior-interfaces/bullet.pdf` |
 | [car](scripting/scripting-reference/behavior-interfaces/car.pdf) | `scripting/scripting-reference/behavior-interfaces/car.pdf` |
 | [direction](scripting/scripting-reference/behavior-interfaces/direction.pdf) | `scripting/scripting-reference/behavior-interfaces/direction.pdf` |
@@ -353,6 +357,7 @@ All PDFs are generated from the official documentation:
 | [facebook](scripting/scripting-reference/plugin-interfaces/facebook.pdf) | `scripting/scripting-reference/plugin-interfaces/facebook.pdf` |
 | [file-chooser](scripting/scripting-reference/plugin-interfaces/file-chooser.pdf) | `scripting/scripting-reference/plugin-interfaces/file-chooser.pdf` |
 | [file-system](scripting/scripting-reference/plugin-interfaces/file-system.pdf) | `scripting/scripting-reference/plugin-interfaces/file-system.pdf` |
+| [gamepad](scripting/scripting-reference/plugin-interfaces/gamepad.pdf) | `scripting/scripting-reference/plugin-interfaces/gamepad.pdf` |
 | [html-element](scripting/scripting-reference/plugin-interfaces/html-element.pdf) | `scripting/scripting-reference/plugin-interfaces/html-element.pdf` |
 | [internationalization](scripting/scripting-reference/plugin-interfaces/internationalization.pdf) | `scripting/scripting-reference/plugin-interfaces/internationalization.pdf` |
 | [json](scripting/scripting-reference/plugin-interfaces/json.pdf) | `scripting/scripting-reference/plugin-interfaces/json.pdf` |
@@ -406,12 +411,6 @@ All PDFs are generated from the official documentation:
 | [persisting-browser-storage](tips-and-guides/persisting-browser-storage.pdf) | `tips-and-guides/persisting-browser-storage.pdf` |
 | [release-channels](tips-and-guides/release-channels.pdf) | `tips-and-guides/release-channels.pdf` |
 | [superseded-features](tips-and-guides/superseded-features.pdf) | `tips-and-guides/superseded-features.pdf` |
-
----
-
-## Release
-
-r487
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-08-04T05:19:32.828711+00:00",
+  "last_updated": "2026-10-14T10:57:32.097695+00:00",
   "construct_version": "1757",
   "cdn_urls": {
     "manual": "https://construct-static.com/downloads/v1757/manuals/1/2/668/construct-3.pdf",
@@ -8,22 +8,22 @@
     "game-services": "https://construct-static.com/downloads/v1757/manuals/7/6/31/game-services.pdf"
   },
   "cdn_last_modified": {
-    "manual": "Thu, 12 Mar 2026 20:06:07 GMT",
-    "addon-sdk": "Thu, 12 Mar 2026 11:56:30 GMT",
-    "game-services": "Sat, 31 Jan 2026 06:02:32 GMT"
+    "manual": "Wed, 14 Oct 2026 01:10:56 GMT",
+    "addon-sdk": "Wed, 14 Oct 2026 10:56:54 GMT",
+    "game-services": "Wed, 14 Oct 2026 10:56:55 GMT"
   },
   "targets": {
     "addon-sdk": {
-      "total_pages": 62,
-      "last_generated": "2026-08-04T05:19:27.439712+00:00"
+      "total_pages": 63,
+      "last_generated": "2026-10-14T10:57:24.252762+00:00"
     },
     "manual": {
-      "total_pages": 345,
-      "last_generated": "2026-08-04T05:19:24.575583+00:00"
+      "total_pages": 350,
+      "last_generated": "2026-10-14T10:57:21.330640+00:00"
     },
     "game-services": {
-      "total_pages": 135,
-      "last_generated": "2026-08-04T05:19:32.828690+00:00"
+      "total_pages": 174,
+      "last_generated": "2026-10-14T10:57:32.097646+00:00"
     }
   }
 }

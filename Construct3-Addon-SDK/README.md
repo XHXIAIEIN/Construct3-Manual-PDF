@@ -10,7 +10,7 @@ All PDFs are generated from the official documentation:
 
 ---
 
-## Files (62 PDFs)
+## Files (63 PDFs)
 
 ### Root
 
@@ -45,7 +45,7 @@ All PDFs are generated from the official documentation:
 | [using-developer-mode](guide/using-developer-mode.pdf) | `guide/using-developer-mode.pdf` |
 | [wrapper-extensions](guide/wrapper-extensions.pdf) | `guide/wrapper-extensions.pdf` |
 
-### Reference (39 files)
+### Reference (40 files)
 
 | File | Path |
 |------|------|
@@ -57,6 +57,7 @@ All PDFs are generated from the official documentation:
 | [quad](reference/geometry-interfaces/quad.pdf) | `reference/geometry-interfaces/quad.pdf` |
 | [rect](reference/geometry-interfaces/rect.pdf) | `reference/geometry-interfaces/rect.pdf` |
 | [idrawparams](reference/graphics-interfaces/idrawparams.pdf) | `reference/graphics-interfaces/idrawparams.pdf` |
+| [imeshdata](reference/graphics-interfaces/imeshdata.pdf) | `reference/graphics-interfaces/imeshdata.pdf` |
 | [iwebglrenderer](reference/graphics-interfaces/iwebglrenderer.pdf) | `reference/graphics-interfaces/iwebglrenderer.pdf` |
 | [iwebgltext](reference/graphics-interfaces/iwebgltext.pdf) | `reference/graphics-interfaces/iwebgltext.pdf` |
 | [iwebgltexture](reference/graphics-interfaces/iwebgltexture.pdf) | `reference/graphics-interfaces/iwebgltexture.pdf` |
@@ -88,12 +89,6 @@ All PDFs are generated from the official documentation:
 | [specifying-dependencies](reference/specifying-dependencies.pdf) | `reference/specifying-dependencies.pdf` |
 | [ilayoutview](reference/ui-interfaces/ilayoutview.pdf) | `reference/ui-interfaces/ilayoutview.pdf` |
 | [utilities](reference/ui-interfaces/utilities.pdf) | `reference/ui-interfaces/utilities.pdf` |
-
----
-
-## Release
-
-r487
 
 ---
 

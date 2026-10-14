@@ -10,20 +10,37 @@ All PDFs are generated from the official documentation:
 
 ---
 
-## Files (135 PDFs)
+## Files (174 PDFs)
 
 ### Root
 
 | File | Path |
 |------|------|
-| [changelogs](changelogs.pdf) | `changelogs.pdf` |
 | [culture](culture.pdf) | `culture.pdf` |
 | [data-types](data-types.pdf) | `data-types.pdf` |
+| [emails](emails.pdf) | `emails.pdf` |
 | [index](index.pdf) | `index.pdf` |
 | [languages](languages.pdf) | `languages.pdf` |
 | [support](support.pdf) | `support.pdf` |
 
-### Authentication (31 files)
+### Achievements (12 files)
+
+| File | Path |
+|------|------|
+| [award-achievement](achievements/api-end-points/achievements/award-achievement.pdf) | `achievements/api-end-points/achievements/award-achievement.pdf` |
+| [create-achievement](achievements/api-end-points/achievements/create-achievement.pdf) | `achievements/api-end-points/achievements/create-achievement.pdf` |
+| [delete-achievement](achievements/api-end-points/achievements/delete-achievement.pdf) | `achievements/api-end-points/achievements/delete-achievement.pdf` |
+| [get-achievement](achievements/api-end-points/achievements/get-achievement.pdf) | `achievements/api-end-points/achievements/get-achievement.pdf` |
+| [list-achievements](achievements/api-end-points/achievements/list-achievements.pdf) | `achievements/api-end-points/achievements/list-achievements.pdf` |
+| [list-awarded-players](achievements/api-end-points/achievements/list-awarded-players.pdf) | `achievements/api-end-points/achievements/list-awarded-players.pdf` |
+| [list-player-achievements](achievements/api-end-points/achievements/list-player-achievements.pdf) | `achievements/api-end-points/achievements/list-player-achievements.pdf` |
+| [update-achievement](achievements/api-end-points/achievements/update-achievement.pdf) | `achievements/api-end-points/achievements/update-achievement.pdf` |
+| [achievement](achievements/api-objects/achievement.pdf) | `achievements/api-objects/achievement.pdf` |
+| [player-achievement](achievements/api-objects/player-achievement.pdf) | `achievements/api-objects/player-achievement.pdf` |
+| [xp-bonus](achievements/api-objects/xp-bonus.pdf) | `achievements/api-objects/xp-bonus.pdf` |
+| [concepts](achievements/concepts.pdf) | `achievements/concepts.pdf` |
+
+### Authentication (33 files)
 
 | File | Path |
 |------|------|
@@ -36,9 +53,11 @@ All PDFs are generated from the official documentation:
 | [link-poll](authentication/api-end-points/login-providers/link-poll.pdf) | `authentication/api-end-points/login-providers/link-poll.pdf` |
 | [change-player-name](authentication/api-end-points/players/change-player-name.pdf) | `authentication/api-end-points/players/change-player-name.pdf` |
 | [delete-player](authentication/api-end-points/players/delete-player.pdf) | `authentication/api-end-points/players/delete-player.pdf` |
+| [forgotten-password](authentication/api-end-points/players/forgotten-password.pdf) | `authentication/api-end-points/players/forgotten-password.pdf` |
 | [get-player](authentication/api-end-points/players/get-player.pdf) | `authentication/api-end-points/players/get-player.pdf` |
-| [get-players](authentication/api-end-points/players/get-players.pdf) | `authentication/api-end-points/players/get-players.pdf` |
+| [list-players](authentication/api-end-points/players/list-players.pdf) | `authentication/api-end-points/players/list-players.pdf` |
 | [register-player](authentication/api-end-points/players/register-player.pdf) | `authentication/api-end-points/players/register-player.pdf` |
+| [set-email-address](authentication/api-end-points/players/set-email-address.pdf) | `authentication/api-end-points/players/set-email-address.pdf` |
 | [set-player-restrictions](authentication/api-end-points/players/set-player-restrictions.pdf) | `authentication/api-end-points/players/set-player-restrictions.pdf` |
 | [set-username-password](authentication/api-end-points/players/set-username-password.pdf) | `authentication/api-end-points/players/set-username-password.pdf` |
 | [sign-in-poll](authentication/api-end-points/players/sign-in-poll.pdf) | `authentication/api-end-points/players/sign-in-poll.pdf` |
@@ -124,7 +143,7 @@ All PDFs are generated from the official documentation:
 | [api-keys](games/api-keys.pdf) | `games/api-keys.pdf` |
 | [create-game](games/create-game.pdf) | `games/create-game.pdf` |
 
-### Leaderboards (47 files)
+### Leaderboards (48 files)
 
 | File | Path |
 |------|------|
@@ -135,20 +154,21 @@ All PDFs are generated from the official documentation:
 | [get-player-scores](leaderboards/api-end-points/scores/get-player-scores.pdf) | `leaderboards/api-end-points/scores/get-player-scores.pdf` |
 | [get-score-history](leaderboards/api-end-points/scores/get-score-history.pdf) | `leaderboards/api-end-points/scores/get-score-history.pdf` |
 | [get-score-neighbours](leaderboards/api-end-points/scores/get-score-neighbours.pdf) | `leaderboards/api-end-points/scores/get-score-neighbours.pdf` |
+| [get-score](leaderboards/api-end-points/scores/get-score.pdf) | `leaderboards/api-end-points/scores/get-score.pdf` |
 | [get-scores](leaderboards/api-end-points/scores/get-scores.pdf) | `leaderboards/api-end-points/scores/get-scores.pdf` |
 | [post-score](leaderboards/api-end-points/scores/post-score.pdf) | `leaderboards/api-end-points/scores/post-score.pdf` |
 | [create-shadow-ban](leaderboards/api-end-points/shadow-bans/create-shadow-ban.pdf) | `leaderboards/api-end-points/shadow-bans/create-shadow-ban.pdf` |
-| [get-ip-bans](leaderboards/api-end-points/shadow-bans/get-ip-bans.pdf) | `leaderboards/api-end-points/shadow-bans/get-ip-bans.pdf` |
-| [get-player-bans](leaderboards/api-end-points/shadow-bans/get-player-bans.pdf) | `leaderboards/api-end-points/shadow-bans/get-player-bans.pdf` |
-| [remove-shadow-ban](leaderboards/api-end-points/shadow-bans/remove-shadow-ban.pdf) | `leaderboards/api-end-points/shadow-bans/remove-shadow-ban.pdf` |
+| [delete-shadow-ban](leaderboards/api-end-points/shadow-bans/delete-shadow-ban.pdf) | `leaderboards/api-end-points/shadow-bans/delete-shadow-ban.pdf` |
+| [list-ip-bans](leaderboards/api-end-points/shadow-bans/list-ip-bans.pdf) | `leaderboards/api-end-points/shadow-bans/list-ip-bans.pdf` |
+| [list-player-bans](leaderboards/api-end-points/shadow-bans/list-player-bans.pdf) | `leaderboards/api-end-points/shadow-bans/list-player-bans.pdf` |
 | [assign-player](leaderboards/api-end-points/teams/assign-player.pdf) | `leaderboards/api-end-points/teams/assign-player.pdf` |
 | [create-team](leaderboards/api-end-points/teams/create-team.pdf) | `leaderboards/api-end-points/teams/create-team.pdf` |
 | [delete-team](leaderboards/api-end-points/teams/delete-team.pdf) | `leaderboards/api-end-points/teams/delete-team.pdf` |
 | [get-team](leaderboards/api-end-points/teams/get-team.pdf) | `leaderboards/api-end-points/teams/get-team.pdf` |
-| [get-teams](leaderboards/api-end-points/teams/get-teams.pdf) | `leaderboards/api-end-points/teams/get-teams.pdf` |
+| [list-team-players](leaderboards/api-end-points/teams/list-team-players.pdf) | `leaderboards/api-end-points/teams/list-team-players.pdf` |
+| [list-teams](leaderboards/api-end-points/teams/list-teams.pdf) | `leaderboards/api-end-points/teams/list-teams.pdf` |
 | [remove-player](leaderboards/api-end-points/teams/remove-player.pdf) | `leaderboards/api-end-points/teams/remove-player.pdf` |
-| [rename-team](leaderboards/api-end-points/teams/rename-team.pdf) | `leaderboards/api-end-points/teams/rename-team.pdf` |
-| [team-players](leaderboards/api-end-points/teams/team-players.pdf) | `leaderboards/api-end-points/teams/team-players.pdf` |
+| [update-team](leaderboards/api-end-points/teams/update-team.pdf) | `leaderboards/api-end-points/teams/update-team.pdf` |
 | [expanded-team](leaderboards/api-objects/expanded-team.pdf) | `leaderboards/api-objects/expanded-team.pdf` |
 | [ip-shadow-ban](leaderboards/api-objects/ip-shadow-ban.pdf) | `leaderboards/api-objects/ip-shadow-ban.pdf` |
 | [leaderboard](leaderboards/api-objects/leaderboard.pdf) | `leaderboards/api-objects/leaderboard.pdf` |
@@ -176,6 +196,12 @@ All PDFs are generated from the official documentation:
 | [teams](leaderboards/teams.pdf) | `leaderboards/teams.pdf` |
 | [tiers](leaderboards/tiers.pdf) | `leaderboards/tiers.pdf` |
 
+### Notifications (1 files)
+
+| File | Path |
+|------|------|
+| [concepts](notifications/concepts.pdf) | `notifications/concepts.pdf` |
+
 ### Ratings (5 files)
 
 | File | Path |
@@ -192,11 +218,38 @@ All PDFs are generated from the official documentation:
 |------|------|
 | [concepts](translations/concepts.pdf) | `translations/concepts.pdf` |
 
----
+### Triggers (4 files)
 
-## Release
+| File | Path |
+|------|------|
+| [actions](triggers/actions.pdf) | `triggers/actions.pdf` |
+| [concepts](triggers/concepts.pdf) | `triggers/concepts.pdf` |
+| [conditions](triggers/conditions.pdf) | `triggers/conditions.pdf` |
+| [when](triggers/when.pdf) | `triggers/when.pdf` |
 
-r487
+### Xp (19 files)
+
+| File | Path |
+|------|------|
+| [create-bonus](xp/api-end-points/bonuses/create-bonus.pdf) | `xp/api-end-points/bonuses/create-bonus.pdf` |
+| [delete-bonus](xp/api-end-points/bonuses/delete-bonus.pdf) | `xp/api-end-points/bonuses/delete-bonus.pdf` |
+| [get-bonus](xp/api-end-points/bonuses/get-bonus.pdf) | `xp/api-end-points/bonuses/get-bonus.pdf` |
+| [list-active](xp/api-end-points/bonuses/list-active.pdf) | `xp/api-end-points/bonuses/list-active.pdf` |
+| [list-bonuses](xp/api-end-points/bonuses/list-bonuses.pdf) | `xp/api-end-points/bonuses/list-bonuses.pdf` |
+| [update-bonus](xp/api-end-points/bonuses/update-bonus.pdf) | `xp/api-end-points/bonuses/update-bonus.pdf` |
+| [create-rank](xp/api-end-points/ranks/create-rank.pdf) | `xp/api-end-points/ranks/create-rank.pdf` |
+| [delete-logo](xp/api-end-points/ranks/delete-logo.pdf) | `xp/api-end-points/ranks/delete-logo.pdf` |
+| [delete-rank](xp/api-end-points/ranks/delete-rank.pdf) | `xp/api-end-points/ranks/delete-rank.pdf` |
+| [list-ranks](xp/api-end-points/ranks/list-ranks.pdf) | `xp/api-end-points/ranks/list-ranks.pdf` |
+| [set-logo](xp/api-end-points/ranks/set-logo.pdf) | `xp/api-end-points/ranks/set-logo.pdf` |
+| [update-rank](xp/api-end-points/ranks/update-rank.pdf) | `xp/api-end-points/ranks/update-rank.pdf` |
+| [add-xp](xp/api-end-points/xp/add-xp.pdf) | `xp/api-end-points/xp/add-xp.pdf` |
+| [get-xp](xp/api-end-points/xp/get-xp.pdf) | `xp/api-end-points/xp/get-xp.pdf` |
+| [remove-xp](xp/api-end-points/xp/remove-xp.pdf) | `xp/api-end-points/xp/remove-xp.pdf` |
+| [set-xp](xp/api-end-points/xp/set-xp.pdf) | `xp/api-end-points/xp/set-xp.pdf` |
+| [bonus-object](xp/api-objects/bonus-object.pdf) | `xp/api-objects/bonus-object.pdf` |
+| [rank-object](xp/api-objects/rank-object.pdf) | `xp/api-objects/rank-object.pdf` |
+| [concepts](xp/concepts.pdf) | `xp/concepts.pdf` |
 
 ---
 
