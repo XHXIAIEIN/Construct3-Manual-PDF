@@ -5,7 +5,7 @@
 
 Unofficial PDF version of the official Construct 3 documentation. Split into individual PDF files by chapter for easy navigation and offline reading.
 
-[Construct 3](https://www.construct.net/) is a browser-based 2D/3D game development engine with visual event system and JavaScript/TypeScript scripting support.
+[Construct 3](https://www.construct.net/) ([affiliate link](https://www.construct.net/a/260259?t=home)) is a browser-based 2D/3D game development engine with visual event system and JavaScript/TypeScript scripting support.
 
 ---
 
